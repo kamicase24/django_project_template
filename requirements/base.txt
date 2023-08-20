@@ -1,0 +1,30 @@
+pytz==2020.4  # https://github.com/stub42/pytz
+python-slugify==4.0.1  # https://github.com/un33k/python-slugify
+Pillow==8.0.1  # https://github.com/python-pillow/Pillow
+argon2-cffi==20.1.0  # https://github.com/hynek/argon2_cffi
+redis==3.5.3  # https://github.com/andymccurdy/redis-py
+hiredis==1.1.0  # https://github.com/redis/hiredis-py
+celery==4.4.6  # pyup: < 5.0,!=4.4.7  # https://github.com/celery/celery
+django-celery-beat==2.1.0  # https://github.com/celery/django-celery-beat
+uvicorn[standard]==0.12.3  # https://github.com/encode/uvicorn
+urllib3==1.26.2
+channels==1.0.2
+asgi_redis==1.0.0
+drf-yasg
+pandas==1.2.4
+
+# Django
+django==4.2.4  # https://www.djangoproject.com/
+django-environ  # https://github.com/joke2k/django-environ
+django-model-utils  # https://github.com/jazzband/django-model-utils
+django-allauth  # https://github.com/pennersr/django-allauth
+django-crispy-forms  # https://github.com/django-crispy-forms/django-crispy-forms
+django-redis  # https://github.com/jazzband/django-redis
+django-timezone-field
+django-import-export
+
+# Django REST Framework
+djangorestframework # https://github.com/encode/django-rest-framework
+django-cors-headers # https://github.com/adamchainz/django-cors-headers
+django-filter # https://django-filter.readthedocs.io/en/stable/guide/install.html
+djangorestframework-simplejwt # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html

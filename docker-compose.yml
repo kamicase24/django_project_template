@@ -1,0 +1,66 @@
+version: 3
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_backups: {}
+
+services:
+  django: &django
+    build:
+      context:
+      dockerfile: ./compose/local/django/dockerfile
+    image: django_project_template_django
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local.postgres
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/local/postgres/dockerfile
+    image: django_project_template_postgres
+    container_name: django_project_template_postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:z
+      - local_postgres_backups:/backups:z
+    env_file:
+      - ./.envs/.local/.postgres
+    ports:
+      - 5432:5432
+  
+  redis:
+    image: redis:5.0
+    ports:
+      - 6379:6379
+    container_name: redis_django_project_template
+  
+  celery:
+    <<: *django
+    image: django_project_template_celery
+    container_name: django_project_template_celery
+    ports: 
+      - 8002:8000
+    depends_on:
+      - redis
+    environment:
+      - DEBUG=1
+    command: celery -A config.celery worker -l info -c 4 --time-limit=300 --prefetch-count=2
+
+  celery-beat:
+    <<: *django
+    image: automation_celery_celery_beat
+    container_name: celery_beat_automation_celery
+    ports:
+      - 8001:8000
+    depends_on:
+      - redis
+    environment:
+      - DEBUG=1
+    command: celery -A config.celery beat -l info --schedule=/app/config/celerybeat-schedule
